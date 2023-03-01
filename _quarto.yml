@@ -12,3 +12,9 @@ format:
   html:
     theme: cosmo
     css: styles.css
+    fig-align: center
+
+editor:
+  markdown:
+    wrap: 72
+    canonical: true
