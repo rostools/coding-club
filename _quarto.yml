@@ -5,13 +5,11 @@ website:
   title: "Coding Club"
   navbar:
     right:
-      - about.qmd
       - icon: github
         href: https://github.com/rostools/coding-club
 format:
   html:
-    theme: cosmo
-    css: styles.css
+    theme: litera
     fig-align: center
 
 editor:
