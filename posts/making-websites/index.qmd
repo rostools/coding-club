@@ -82,7 +82,7 @@ Now, we can open the `index.qmd` file and start writing our first blog post.
 
 At the very top, we need to define some post metadata in the form of YAML. We want to define a title, description, author, date, and categories. Lets add the following to our `index.qmd`.
 
-``` R
+``` r
 ---
 title: "My first blog post"
 description: "My first blog post using Quarto"
@@ -98,7 +98,7 @@ Now we need to write our actual text body. To write our text body, we will write
 
 Lets add the following text body.
 
-``` R
+``` r
 ---
 title: "My first blog post"
 description: "My first blog post using Quarto"
