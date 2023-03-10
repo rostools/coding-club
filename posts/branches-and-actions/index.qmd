@@ -111,7 +111,19 @@ Then, first step is to fork the source repository (in this case the website repo
 usethis::create_from_github("rostools/coding-club", fork = true))
 ```
 
-What this does is that - It forks the coding-club repository owned by rostools (Luke) into my Github account - Clones the coding-club repository into a folder named "coding-club" in my desktop - *origin remote* is set to my coding-club repository (personal copy). - Opens a new instance of RStudio in the coding-club project, if I'm working in RStudio. Otherwise, switches your current R session to that project. Does additional Git setup: - *upstream* remote is set to the coding-club repository owned by rostools(original one). - *master branch* is set to track upstream/master, so you can pull upstream changes in the future.
+What this does is that
+
+\- It forks the coding-club repository owned by rostools (Luke) into my Github account
+
+ - Clones the coding-club repository into a folder named "coding-club" in my desktop - *origin remote* is set to my coding-club repository (personal copy).
+
+\- Opens a new instance of RStudio in the coding-club project, if I'm working in RStudio. Otherwise, switches your current R session to that project.
+
+Does additional Git setup:
+
+\- *upstream* remote is set to the coding-club repository owned by rostools(original one).
+
+\- *master branch* is set to track upstream/master, so you can pull upstream changes in the future.
 
 In case the line above gives you an error, you can go to the following link where the cloning repository is located. In this case it was: <https://github.com/ceciliamescobedo/coding-club>.In the page:
 
@@ -141,7 +153,7 @@ gert::git_branch_list()
 
 After hitting enter you will be able to see the list of branches as shown in @fig-List-of-branches.
 
-The important branches are the ones that does not include *origin* or *upstream* in their name. In this case we have two branches that meet those requirements -\> *main* which was the original branch and *add-action* which is the branch we created. 
+The important branches are the ones that does not include *origin* or *upstream* in their name. In this case we have two branches that meet those requirements -\> *main* which was the original branch and *add-action* which is the branch we created.
 
 ![List of branches](images/list-branches.png){#fig-List-of-branches align="center" width="80%" height="90%"}
 
@@ -186,15 +198,15 @@ Since we are done with the changes we wanted to make in our branch, we are ready
 
 This launches a browser window with the Github page, which looks like @fig-Creating-a-pull-request.
 
-- Click the *create pull request* button
+-   Click the *create pull request* button
 
-Notice that in @fig-Creating-a-pull-request at top it says `rostools/coding-club` not `Cecilia/coding-club.` 
+Notice that in @fig-Creating-a-pull-request at top it says `rostools/coding-club` not `Cecilia/coding-club.`
 
-![Creating a pull request](images/pull-request.png){#fig-Creating-a-pull-request align="center" width="80%" height="90%"} 
+![Creating a pull request](images/pull-request.png){#fig-Creating-a-pull-request align="center" width="80%" height="90%"}
 
-### Review of pull request, merge and finish. 
+### Review of pull request, merge and finish.
 
-The owner of the repository will accept the changes. This will merge it into the coding-club repository and we can start generating the website through that. 
+The owner of the repository will accept the changes. This will merge it into the coding-club repository and we can start generating the website through that.
 
 ![Merging a branch](images/merged-branch.png){#fig-Merging-a-branch align="center" width="80%" height="90%"}
 
@@ -204,23 +216,23 @@ Once this is done we can use `usethis::pr_pause()`. This switches you from the b
 
 In summary the Github flow involves the following:
 
-1.   Creating a branch
+1.  Creating a branch
 
 2.  Making changes
 
 3.  Creating a pull request
 
-4.   Reviewing pull request
+4.  Reviewing pull request
 
-5.   Merging and finish
+5.  Merging and finish
 
 So now let's go ahead and create a blog post using this steps.
 
-1.   Create a new branch using `usethis::pr_init("post-branches)`
+1.  Create a new branch using `usethis::pr_init("post-branches)`
 
 2.  In this case the change will be creating a blog post.
 
--    Go to file-\> New File-\> Quarto Document
+-   Go to file-\> New File-\> Quarto Document
 
 -   Save this file in a new location. For this got to File -\> Save as -\> Coding-club -\> posts -\> Create new folder -\> Call it `branches-actions`
 
@@ -234,6 +246,6 @@ So now let's go ahead and create a blog post using this steps.
 
 -   Click the pull request button on the github window that opened.
 
-4.   Wait for the pull request to be reviewed.
+4.  Wait for the pull request to be reviewed.
 
 5.  Merging will occur if changes are accepted. To finish with the pull request, type `usethis::pr_finish()`. This line of code will close your branch. Note in case you want to resume your branch you can type `usethis::pr_resume` instead.
