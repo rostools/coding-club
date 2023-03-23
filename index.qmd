@@ -1,5 +1,5 @@
 ---
-title: "coding-club"
+title: "R Coding Club"
 listing:
   contents: posts
   sort: "date desc"

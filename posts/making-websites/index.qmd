@@ -8,29 +8,41 @@ categories:
   - websites
 ---
 
-Quarto is a open-source scientific and technical publishing system that allows us to create a variety of different outputs. This includes outputs such as PDF, Word files, or HTML documents. But in addition, Quarto has a inbuilt static site generator, with great integration with R and Python code.
+Quarto is a open-source scientific and technical publishing system that
+allows us to create a variety of different outputs. This includes
+outputs such as PDF, Word files, or HTML documents. But in addition,
+Quarto has a inbuilt static site generator, with great integration with
+R and Python code.
 
-### Creating a Quarto blog
+## Creating a Quarto blog
 
-A quarto blog can be created in one single workflow. To create a new quarto blog select File -\> New Project -\> Quarto blog, decide on a name and select a folder where to store it, and press Create Project.
+A quarto blog can be created in one single workflow. To create a new
+quarto blog select `File -> New Project -> Quarto blog`, decide on a
+name and select a folder where to store it, and press Create Project.
 
-![Create a blog post](images/create_blog.png){fig-align="center"}
+![Create a blog post](images/create_blog.png)
 
-**Quarto files**
+### Quarto files
 
-After having created a Quarto blog, your RStudio will open a session that is populated with a variety of files and folders. Some of these files contain settings related to the blog, while other contains data. The files most important include:
+After having created a Quarto blog, your RStudio will open a session
+that is populated with a variety of files and folders. Some of these
+files contain settings related to the blog, while other contains data.
+The files most important include:
 
 -   `_quarto.yml` - Defines how the blog will be rendered.
 -   `index.qmd` - Defines the content of your blog landing page.
 -   `styles.css` - Defines the theme.
 
-You might also notice a folder called `posts`. As the name implies, this folder will contain our blog posts.
+You might also notice a folder called `posts/`. As the name implies,
+this folder will contain our blog posts.
 
-### Create landing page
+## Create landing page
 
-One of the first things we want to do is edit our blog landing page. For this example, we only want to change the title. The title can be changed by altering the title in `index.qmd`.
+One of the first things we want to do is edit our blog landing page. For
+this example, we only want to change the title. The title can be changed
+by altering the title in `index.qmd`.
 
-``` r
+``` yaml
 ---
 title: "My blog"
 listing:
@@ -45,11 +57,15 @@ title-block-banner: true
 ---
 ```
 
-### Define blog settings
+## Define blog settings
 
-In addition to editing the landing page, we can should also define blog specific settings. These settings are all defined inside the `_quarto.yml` file. Lets change the website title and add a link to our Github repository to the navigation bar by changing the `_quarto.yml` file to the following.
+In addition to editing the landing page, we can should also define blog
+specific settings. These settings are all defined inside the
+`_quarto.yml` file. Lets change the website title and add a link to our
+GitHub repository to the navigation bar by changing the `_quarto.yml`
+file to the following.
 
-``` r
+``` yaml
 project:
   type: website
 
@@ -66,11 +82,15 @@ format:
     css: styles.css
 ```
 
-### Create a blog post
+## Create a blog post
 
-To create a blog post, we need to go into the `posts` folder. From here we can see that there already exists two example blog posts, "welcome" and "post-with-code". Lets delete those and create our own post.
+To create a blog post, we need to go into the `posts/` folder. From here
+we can see that there already exists two example blog posts, "welcome"
+and "post-with-code". Lets delete those and create our own post.
 
-After deleting the example blog posts, create a new folder called "first-blog-post". Inside this folder create a `.qmd` file called `index.qmd`. Your folders should look like this:
+After deleting the example blog posts, create a new folder called
+`"first-blog-post"`. Inside this folder create a `.qmd` file called
+`index.qmd`. Your folders should look like this:
 
 ::: {layout-ncol="1"}
 ![Posts folder](images/posts_folder.png)
@@ -78,11 +98,14 @@ After deleting the example blog posts, create a new folder called "first-blog-po
 ![First-blog-post folder](images/first_blog_folder.png)
 :::
 
-Now, we can open the `index.qmd` file and start writing our first blog post.
+Now, we can open the `index.qmd` file and start writing our first blog
+post.
 
-At the very top, we need to define some post metadata in the form of YAML. We want to define a title, description, author, date, and categories. Lets add the following to our `index.qmd`.
+At the very top, we need to define some post metadata in the form of
+YAML. We want to define a title, description, author, date, and
+categories. Lets add the following to our `index.qmd`.
 
-``` r
+``` yaml
 ---
 title: "My first blog post"
 description: "My first blog post using Quarto"
@@ -94,11 +117,14 @@ categories:
 ---
 ```
 
-Now we need to write our actual text body. To write our text body, we will write using [Markdown](https://daringfireball.net/projects/markdown/), a simple and easy to use markup language.
+Now we need to write our actual text body. To write our text body, we
+will write using
+[Markdown](https://quarto.org/docs/authoring/markdown-basics.html), a
+simple and easy to use markup language.
 
 Lets add the following text body.
 
-``` r
+``` yaml
 ---
 title: "My first blog post"
 description: "My first blog post using Quarto"
@@ -116,20 +142,30 @@ This is my first blog post.
 
 ### Render the blog
 
-Up until now, we have only been working in files and folders. But, how do we actually create a blog? This is where Quarto as a static site generate comes in, where we can use Quarto to automatically render us a blog website.
+Up until now, we have only been working in files and folders. But, how
+do we actually create a blog? This is where Quarto as a static site
+generate comes in, where we can use Quarto to automatically render us a
+blog website.
 
-To render our blog into a website we can press the render button at the top of any `index.qmd` file in the main blog directory.
+To render our blog into a website we can press the render button at the
+top of any `index.qmd` file in the main blog directory.
 
-![Render blog post](images/render_blog.png){fig-align="center"}
+![Render blog post](images/render_blog.png)
 
 When having render the blog, the landing page should look like this:
 
-![](images/image-1875593265.png)When viewing our blog post we should see:![](images/image-1734744906.png)
+![Landing page to website](images/rendered-landing-page.png)
 
-### Host your blog
+When viewing our blog post we should see:
 
-While we now have successfully created a blog, it is currently only stores locally on our own computer. It is not accessible from the internet.
+![Blog post on website](images/rendered-blog-post.png)
 
-There are a multitude of methods to host our blog, we will show you how to use Github (Github account required).
+## Host your blog
 
-TODO
+While we now have successfully created a blog, it is currently only
+stores locally on our own computer. It is not accessible from the
+internet.
+
+There are a multitude of methods to host our blog. We will show you how
+to use GitHub (GitHub account required) to host a website in our next
+session.
