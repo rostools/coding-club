@@ -169,4 +169,3 @@ internet.
 There are a multitude of methods to host our blog. We will show you how
 to use GitHub (GitHub account required) to host a website in our next
 session.
-
