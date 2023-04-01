@@ -13,6 +13,10 @@ number-sections: true
 code-copy: hover
 ---
 
+> This session was recorded and uploaded on YouTube here:
+
+{{< video https://www.youtube.com/embed/lJ57oCrHkjU >}}
+
 ## Introduction
 
 In this post we will learn all about GitHub flow, making branches, and
