@@ -11,3 +11,48 @@ page-layout: full
 title-block-banner: true
 ---
 
+R Coding Club is an informal time to chat and learn some new skills. The
+topic of each session
+
+For most sessions, our process is that one person is the "driver" and
+one person is the "navigator". The driver shares their screen and types
+in the code, while the navigator tells the driver what to do and what
+code to type. Usually, the driver is a beginner and the navigator is
+someone with more experience.
+
+While we record and upload the session to YouTube, to improve knowledge
+sharing, we also create a blog post on what we covered during the
+session. Part of the purpose of making a blog post is to solidify
+knowledge learned by the driver, so they will be responsible for writing
+the blog. To add a post, read through:
+
+1.  The section on creating blogs in the [making
+    websites](posts/making-websites/index.qmd#create-blogs) blog.
+
+2.  The sections
+    [prerequisites](posts/branches-and-actions/index.qmd#prerequisites),
+    [forking and cloning](posts/branches-and-actions/index.qmd#forking),
+    [create a
+    branch](posts/branches-and-actions/index.qmd#create-branch), and
+    [create a pull
+    request](posts/branches-and-actions/index.qmd#create-pr) on the
+    [creating branches](posts/branches-and-actions/index.qmd) blog.
+    Follow the code to add the blog file created in the point 1 above.
+    **Do not** do anything related to the Actions that is described in
+    this blog.
+
+## Want to join?
+
+-   **When?** Usually we have them on the first of the month at 10:00
+    CET (GMT+2).
+    [Subscribe](https://calendar.google.com/calendar/ical/39a16da8db74089c7694eb93955eecf8f7385d923f27af8eb20efc02c8757ed2%40group.calendar.google.com/public/basic.ics)
+    to the Google Calendar to have the events included in your own
+    calendar. Events are also listed on the Discord server.
+-   **Where?** We meet virtually on the
+    [r-cubed](https://discord.gg/xHPyj7dxJx) Discord server in the
+    "Coding Club" Voice Channel.
+-   **How to prepare?** We focus on an R-based workflow and set of
+    tools. For all the programs we'll use, follow [these installation
+    instructions](https://guides.rostools.org/pre-course.html#installation-instructions).
+
+## Blogs
