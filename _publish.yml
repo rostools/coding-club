@@ -1,0 +1,4 @@
+- source: project
+  netlify:
+    - id: "29e8a5d7-c4d5-4d28-bd69-9ef97089ca9d"
+      url: "https://coding-club-rostools.netlify.app"
