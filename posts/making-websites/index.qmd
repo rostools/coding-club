@@ -2,7 +2,8 @@
 title: "Making websites"
 description: "How to make a simple Quarto website"
 author: "Anders Askeland"
-date: last-modified
+date: "2023-02-28"
+date-modified: last-modified
 categories: 
   - quarto
   - websites

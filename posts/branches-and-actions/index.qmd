@@ -2,7 +2,8 @@
 title: "Making Branches and Adding Actions"
 author: "Cecilia Martinez Escobedo"
 description: "Learning the GitHub flow, making branches, and adding Actions"
-date: last-modified
+date: "2023-03-10"
+date-modified: last-modified
 categories: 
   - quarto
   - websites
