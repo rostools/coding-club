@@ -162,7 +162,7 @@ it. This helps you decide whether to keep the existing credential or
 replace it. In my case I choose the option that said "Replace this
 credentials."
 
-## Forking and cloning
+## Forking and cloning {#forking}
 
 A *fork* can be defined as a personal copy of a repository in GitHub
 owned by a different user.
@@ -224,7 +224,7 @@ link where the cloning repository is located. In this case it was:
 GitHub](images/cloning.png){#fig-cloning-directly-from-github
 align="center" width="80%" height="90%"}
 
-## Creating a new branch and making changes.
+## Creating a new branch and making changes {#create-branch}
 
 `pr_init()`creates a branch in our repository. Go to your R Console and
 type:
@@ -299,7 +299,7 @@ access through the file pane in Rstudio.
 This steps will generate the website, push it to GitHub and build the
 website in GitHub.
 
-## Creating a pull request
+## Creating a pull request {#create-pr}
 
 Since we are done with the changes we wanted to make in our branch, we
 are ready to push our branch called `add-action`

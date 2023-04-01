@@ -83,7 +83,7 @@ format:
     css: styles.css
 ```
 
-## Create a blog post
+## Create a blog post {#create-blog}
 
 To create a blog post, we need to go into the `posts/` folder. From here
 we can see that there already exists two example blog posts, "welcome"
