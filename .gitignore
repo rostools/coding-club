@@ -2,3 +2,4 @@
 .Rproj.user
 _freeze
 _site
+.Rbuildignore
