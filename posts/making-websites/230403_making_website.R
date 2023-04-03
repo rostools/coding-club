@@ -10,3 +10,7 @@ gert::git_branch_list()
 #create a github folder
 usethis::use_github_action("build-website",
                            url = "https://raw.githubusercontent.com/quarto-dev/quarto-actions/main/examples/quarto-publish-example.yml")
+
+#creating a pull request
+usethis::pr_push()
+
