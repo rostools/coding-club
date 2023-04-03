@@ -14,3 +14,5 @@ usethis::use_github_action("build-website",
 #creating a pull request
 usethis::pr_push()
 
+#create a new branch
+usethis::pr_init("post-branches")
