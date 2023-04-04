@@ -9,8 +9,6 @@ categories:
   - websites
   - actions
   - branches
-number-sections: true
-code-copy: hover
 ---
 
 > This session was recorded and uploaded on YouTube here:
