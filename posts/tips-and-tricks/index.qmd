@@ -96,7 +96,7 @@ times* while improving your code.
     -   To insert a new code chunk in your Quarto document, you can type
         in the Palette "insert chunk".
 
-        ```{r}
+        ```{{r}}
         #| echo: true
         ```
 
@@ -121,7 +121,7 @@ For instance, when in an R script (or code chunk), typing "fun" followed
 by pressing `Tab`, a template for a function will be inserted that looks
 like:
 
-```{r}
+``` r
 name <- function(variables) {
     
 }
