@@ -8,6 +8,8 @@ website:
     right:
       - icon: github
         href: https://github.com/rostools/coding-club
+      - icon: youtube
+        href: https://www.youtube.com/@r-cubedcodingclub-bc5bf
   page-footer:
     center:
       - text: "License: CC BY 4.0 {{< fa brands creative-commons >}} {{< fa brands creative-commons-by >}}"
