@@ -15,10 +15,7 @@ website:
       - text: "Code of Conduct"
         href: "https://guides.rostools.org/conduct.html"
 
-format:
-  html:
-    theme: litera
-    fig-align: center
+format: r3-theme-html
 
 editor:
   markdown:
