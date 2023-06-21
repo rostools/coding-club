@@ -1,0 +1,64 @@
+---
+title: "Making Tables"
+description: "Tips on tables to describe populations"
+author: "Stefania Noerman"
+date: "2023-06-02"
+format: html
+categories: 
+- quarto
+- tables
+- population description
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+title-block-banner: true
+---
+
+Today in the \[Coding Club\] (https://coding-club.rostools.org/), we learned some R packages that can be used to easily create tables to describe study population easily.
+
+First of all, we need to create a new project and save it somewhere you prefer.
+
+Then, create a new Quarto document by choosing File -\> New file -\> Quarto document. Give a title to it then click "Create".
+
+Why do we use \[Quarto\] (https://quarto.org/)? Because it will make it easier to create the document later, either for your manuscript or report in pdf or doc format, or if you want to publish it as html for your website, as we are doing now for this blog.
+
+Then use Ctrl+Shift+P to insert a code chunk, and in this first code chunk we will setup the libraries we need.
+
+```{r setup, include= FALSE}
+library(tidyverse)
+library(gtsummary)
+library(palmerpenguins) 
+```
+
+*gtsummary* is a package for making tables, check the \[gtsummary website\] (https://www.danieldsjoberg.com/gtsummary) for further information.
+
+The dataset is provided from the library *palmerpenguins*.
+
+Here is the chunk to load the table and how we can change different components for different purposes. The information on which function is needed for which purpose is included as comments (after the #). Or, you can comment them when you try them one by one and see which one does which.
+
+```{r}
+penguins
+penguins %>% 
+    tbl_summary( #creating table summary with n(%) and median (IQR)
+        by = species, #group by species
+        missing = "no", #remove the missing values
+        statistic = list(all_continuous()~"{mean} ({sd})"), #overwrite, all the continuous variables using mean(sd)
+        label = list(
+           bill_length_mm ~ "Bill Length (mm)" #rename the variable in the table
+        )
+    ) %>% 
+    add_n() %>%  #add the n column to count the number of data point for each variable
+    add_overall() %>% #add a new column called overall
+    add_p() #add a new column called p-value, only if we test a hypothesis, not when we only describe the population
+```
+
+When you are ready, you can click ![Render](Render.png){#fig-render} and see how your table looks like.
+
+Do you need more information? Here is the link to the recording in \[Youtube\] (https://youtu.be/CN3O27cc4SY), and hope you find it useful.
+
+See you next time!
