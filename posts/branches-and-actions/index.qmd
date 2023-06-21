@@ -179,7 +179,7 @@ to get our own local copy. To do this type the following in the R Studio
 console:
 
 ``` r
-usethis::create_from_github("rostools/coding-club", fork = true)
+usethis::create_from_github("rostools/coding-club", fork = TRUE)
 ```
 
 What this does is that:
