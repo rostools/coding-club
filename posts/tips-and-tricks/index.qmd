@@ -1,0 +1,171 @@
+---
+title: "Tips and Tricks in RStudio"
+description: "Several tips to save time and improve quality of life while working in RStudio."
+author: "Stefania Noerman"
+date: "2023-04-03"
+date-modified: last-modified
+categories: 
+  - quarto
+  - tips
+  - shortcuts
+---
+
+> We recorded this session but the audio for some reason didn't save, so
+> we don't have a YouTube link to provide.
+
+Here are some tips and tricks we covered in this session to save time
+and improve quality of life while working in RStudio. Let's start!
+
+But first, since some of the tips require an R Project, we need to
+create a new one and save it somewhere on the computer.
+
+## Using the Command Palette
+
+The Command Palette is a very useful tool to use in RStudio. You access
+it by typing `Ctrl-Shift-P` (for "palette"). It will pop up a text box
+where you can type text in.
+
+Let's make a new Quarto document with it by typing "new quarto". Select
+the first item that shows up in the Palette. This will open a box to
+choose how to create the draft Quarto document. Give a title to it then
+click **Create**.
+
+## Quality of life options
+
+R is meant to reduce repetition and improve reproducibility. But,
+changing some things may even improve your *quality of life*. Here are
+some Global Options that can help improving the quality of life in
+coding with R:
+
+1.  Under "Tools -\> Global Options -\> Code -\> Display", under
+    **Syntax section**, check the boxes for **highlight R function
+    calls** and **use rainbow parentheses**. The second is especially
+    useful to mark if we have equal number of opening and closing
+    brackets.
+
+2.  Under "Tools -\> Global Options -\> Code -\> Saving", check the
+    boxes under **Auto-save** written **always save R script before
+    sourcing** and **automatically save when editor loses focus**. When
+    editor is idle, make sure to choose **backup unsaved changes**, to
+    make sure that you don't lose anything you are working on if your
+    laptop breaks or you spills your coffee, for example.
+
+3.  Under "Tools -\> Global Options -\> Accessibility", check the box
+    saying **highlight focused panel**. This selection will help
+    highlighting the pane you are in, either you are in script or
+    console pane.
+
+For R Project specific options, specifically for making standardized
+Markdown in R Markdown and Quarto documents look tidier and more
+organized, you can do:
+
+1.  Why did we create new project? Because we want to make the script
+    looks tidier. And how do we do this? In **Tools** -\> **Project
+    Options** -\> **R Markdown**, choose **column** for automatic text
+    wrapping (line breaks).
+
+## The `.Rprofile`
+
+The `.Rprofile` is a file that stores some basic code that R runs
+everytime it restarts. This is a great place to add some code that you
+might use everytime you start using R. For instance, the usethis package
+has a lot of workflow and interactive functions you might use while
+working on an analysis. Instead of typing `usethis::` everytime to
+access the functions in usethis, you can load usethis by having it in
+the `.Rprofile`. In fact, usethis has a function to help you with this:
+
+``` r
+usethis::use_usethis()
+```
+
+Type this in the Console and follow the directions it provides.
+
+## Keyboard shortcuts
+
+Did you notice that using your keyboard and mouse alternately may not be
+as efficient as using only keyboard? Here are some tips to *save some
+times* while improving your code.
+
+1.  You can move from the R Console to R script or Quarto document
+    quickly without touching your mouse by pressing `Ctrl-1`. Then, you
+    can use `Ctrl-2` to shift to the Console.
+
+2.  Make heavy use of the Command Palette (`Ctrl-Shift-P`) to complete
+    tasks while working in RStudio, for example:
+
+    -   To insert a new code chunk in your Quarto document, you can type
+        in the Palette "insert chunk".
+
+        ```{{r}}
+        #| echo: true
+        ```
+
+        This is how a chunk looks like. You can run this chunk
+        separately by clicking the play button on the top right corner.
+
+    -   To add comments to a function, you can type "Roxygen comment"
+        into the Palette while the cursor is in a function and it will
+        automatically add a template structure for writing a comment
+        about your function.
+
+## Snippets
+
+Snippets are a way to make a shortcut for inserting text based on a
+"code".
+
+To find the snippets and edit them, use the Palette (`Ctrl-Shift-P`) and
+type "edit snippets". There you will find some predefined snippets. You
+can also create your own.
+
+For instance, when in an R script (or code chunk), typing "fun" followed
+by pressing `Tab`, a template for a function will be inserted that looks
+like:
+
+``` r
+name <- function(variables) {
+    
+}
+```
+
+You can just fill in the name of the function, then press `Tab` to move
+to the variables, change the name, then press `Tab` again to move to the
+function code area and write your function without moving your fingers
+from the keyboard.
+
+## Vim keybindings (advanced)
+
+This is an advanced tip for becoming more effective at writing and
+coding. This tip is to learn to use Vim keybindings. Vim is a text
+editor that has a unique way of typing by inside different "modes". When
+in the "command mode", keys on your keyboard do actions. For instance,
+hitting the "j" key moves the cursor down one line. Hitting "2j" moves
+the cursor down two lines. When you hit the "i" key, you enter the "edit
+mode", meaning that the keys will now enter into the document like
+normal. To get back to "command mode", you would hit "Esc".
+
+Learning Vim keybindings has a steep learning curve, but is a major
+investment in your work if you plan for your career to involve a lot of
+working on the computer and typing on the keyboard. But learning it will
+save a lot of time to give commands by typing your code. So it is like
+coding while coding, sounds cool, right? How do you do it in RStudio?
+Under "Tools -\> Global Options -\> Code -\> Keybindings", you can use
+*Vim*. After *Vim* is activated, the cursor will change to blinking red
+block in the script pane. When the cursor looks like that, it means it
+is in the "command mode". When in the "edit mode", the cursor is a
+blinking black line.
+
+Here are some other examples of :
+
+-   "u" to undo
+-   "d" to delete
+-   "d2w" to delete 2 words
+-   "d/p" to delete until the next "p" (or whatever letter you want)
+-   "k" to go up
+-   "j" to go down
+-   "i" will make the cursor go to "edit/insert mode" so you can insert
+    text
+-   "Esc" to go back to the command mode
+
+If you want to go back to normal, you can simply deactivate the
+**keybindings** in the Global Options to default mode.
+
