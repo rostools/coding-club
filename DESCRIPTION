@@ -11,3 +11,5 @@ Imports:
     magrittr,
     palmerpenguins
 License: CC BY 4.0
+Depends: 
+    tidyverse
