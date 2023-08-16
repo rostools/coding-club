@@ -13,7 +13,7 @@ categories:
 
 > This session was recorded and uploaded on YouTube here:
 
-{{< video https://youtu.be/eZtXI2hSZXI >}}
+{{< video https://youtube.com/embed/eZtXI2hSZXI >}}
 
 Debugging is a very broad topic, encompassing a wide array of scenarios
 that are often highly context-specific. We can encounter diverse
