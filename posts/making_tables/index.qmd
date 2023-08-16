@@ -1,64 +1,129 @@
 ---
-title: "Making Tables"
-description: "Tips on tables to describe populations"
-author: "Stefania Noerman"
+title: "Making descriptive statistics tables"
+description: "Tips on making tables of descriptive statistics of your data."
+author: 
+- "Stefania Noerman"
+- Luke W. Johnston
 date: "2023-06-02"
-format: html
+date-modified: last-modified
 categories: 
 - quarto
 - tables
-- population description
-listing:
-  contents: posts
-  sort: "date desc"
-  type: default
-  categories: true
-  sort-ui: false
-  filter-ui: false
-page-layout: full
-title-block-banner: true
+- descriptive statistics
 ---
 
-Today in the \[Coding Club\] (https://coding-club.rostools.org/), we learned some R packages that can be used to easily create tables to describe study population easily.
+> This session was recorded and uploaded on YouTube here:
 
-First of all, we need to create a new project and save it somewhere you prefer.
+{{< video https://youtube.com/embed/CN3O27cc4SY >}}
 
-Then, create a new Quarto document by choosing File -\> New file -\> Quarto document. Give a title to it then click "Create".
+In this session, we covered the `{gtsummary}` R packages that can be
+used to easily create tables to describe study datasets easily. To show
+off how to make tables, we'll use the dataset provided in the
+`{palmerpenguins}` package. So first, let's load up our packages!
 
-Why do we use \[Quarto\] (https://quarto.org/)? Because it will make it easier to create the document later, either for your manuscript or report in pdf or doc format, or if you want to publish it as html for your website, as we are doing now for this blog.
-
-Then use Ctrl+Shift+P to insert a code chunk, and in this first code chunk we will setup the libraries we need.
-
-```{r setup, include= FALSE}
+```{r setup}
+#| output: false
 library(tidyverse)
 library(gtsummary)
 library(palmerpenguins) 
 ```
 
-*gtsummary* is a package for making tables, check the \[gtsummary website\] (https://www.danieldsjoberg.com/gtsummary) for further information.
-
-The dataset is provided from the library *palmerpenguins*.
-
-Here is the chunk to load the table and how we can change different components for different purposes. The information on which function is needed for which purpose is included as comments (after the #). Or, you can comment them when you try them one by one and see which one does which.
+Let's first take a look at the data:
 
 ```{r}
 penguins
-penguins %>% 
-    tbl_summary( #creating table summary with n(%) and median (IQR)
-        by = species, #group by species
-        missing = "no", #remove the missing values
-        statistic = list(all_continuous()~"{mean} ({sd})"), #overwrite, all the continuous variables using mean(sd)
-        label = list(
-           bill_length_mm ~ "Bill Length (mm)" #rename the variable in the table
-        )
-    ) %>% 
-    add_n() %>%  #add the n column to count the number of data point for each variable
-    add_overall() %>% #add a new column called overall
-    add_p() #add a new column called p-value, only if we test a hypothesis, not when we only describe the population
 ```
 
-When you are ready, you can click ![Render](Render.png){#fig-render} and see how your table looks like.
+There are `r ncol(penguins)` columns in the dataset, with a good variety
+of character and numeric data. The core function from `{gtsummary}` is
+the `tbl_summary()` function.
 
-Do you need more information? Here is the link to the recording in \[Youtube\] (https://youtu.be/CN3O27cc4SY), and hope you find it useful.
+```{r}
+penguins %>% 
+  tbl_summary()
+```
 
-See you next time!
+You see that it automatically checks all the columns and runs
+descriptive statistics that are specific to the data type (e.g. count
+and percent for character data). It also defaults to an overall summary
+statistic for each column. But if we want to do it by a specific group,
+we use the `by` argument:
+
+```{r}
+penguins %>% 
+  tbl_summary(
+    by = species
+  )
+```
+
+Which creates several table columns for each `species` in the dataset.
+There are some `Unknown` values listed in the rows for the variables.
+That's because there is some missingness. We can remove that by using
+the `missing` argument:
+
+```{r}
+penguins %>% 
+  tbl_summary(
+    by = species,
+    missing = "no"
+  )
+```
+
+That's nicer! We can overwrite the statistic used with the `statistic`
+argument and giving that argument a `list()` (details are described in
+the package functionality documentation).
+
+```{r}
+penguins %>% 
+  tbl_summary(
+    by = species,
+    missing = "no",
+    statistic = list(all_continuous() ~ "{mean} {sd}")
+  )
+```
+
+In between the `{}` are the functions you want to use. So here, the
+functions are `mean()` and `sd()`. We can edit the labels used for the
+variables with `label` argument.
+
+```{r}
+penguins %>% 
+  tbl_summary(
+    by = species,
+    missing = "no",
+    statistic = list(all_continuous() ~ "{mean} {sd}"),
+    label = list(bill_length_mm = "Bill length (mm)")
+  )
+```
+
+It's often useful to know what the sample size is in each variable,
+which we can add as a column by piping into `add_n()`.
+
+```{r}
+penguins %>% 
+  tbl_summary(
+    by = species,
+    missing = "no",
+    statistic = list(all_continuous() ~ "{mean} {sd}"),
+    label = list(bill_length_mm = "Bill length (mm)")
+  ) %>% 
+  add_n()
+```
+
+Without using the `by` argument, we get the overall values for all the
+data. But with the `by` argument, that gets removed. We can add it back
+with the `add_overall()` function.
+
+```{r}
+penguins %>% 
+  tbl_summary(
+    by = species,
+    missing = "no",
+    statistic = list(all_continuous() ~ "{mean} {sd}"),
+    label = list(bill_length_mm = "Bill length (mm)")
+  ) %>% 
+  add_n() %>% 
+  add_overall()
+```
+
+We almost have a table ready for including in a paper or report!
