@@ -1,0 +1,13 @@
+Package: coding-club
+Type: Website
+Version: 0.0.0.9000
+Authors@R: 
+    person("Luke", "Johnston", , "lwjohnst@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-4169-2616"))
+Encoding: UTF-8
+Imports: 
+    dplyr,
+    gtsummary,
+    magrittr,
+    palmerpenguins
+License: CC BY 4.0

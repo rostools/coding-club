@@ -1,0 +1,129 @@
+---
+title: "Making descriptive statistics tables"
+description: "Tips on making tables of descriptive statistics of your data."
+author: 
+- "Stefania Noerman"
+- Luke W. Johnston
+date: "2023-06-02"
+date-modified: last-modified
+categories: 
+- quarto
+- tables
+- descriptive statistics
+---
+
+> This session was recorded and uploaded on YouTube here:
+
+{{< video https://youtube.com/embed/CN3O27cc4SY >}}
+
+In this session, we covered the `{gtsummary}` R packages that can be
+used to easily create tables to describe study datasets easily. To show
+off how to make tables, we'll use the dataset provided in the
+`{palmerpenguins}` package. So first, let's load up our packages!
+
+```{r setup}
+#| output: false
+library(tidyverse)
+library(gtsummary)
+library(palmerpenguins) 
+```
+
+Let's first take a look at the data:
+
+```{r}
+penguins
+```
+
+There are `r ncol(penguins)` columns in the dataset, with a good variety
+of character and numeric data. The core function from `{gtsummary}` is
+the `tbl_summary()` function.
+
+```{r}
+penguins %>% 
+  tbl_summary()
+```
+
+You see that it automatically checks all the columns and runs
+descriptive statistics that are specific to the data type (e.g. count
+and percent for character data). It also defaults to an overall summary
+statistic for each column. But if we want to do it by a specific group,
+we use the `by` argument:
+
+```{r}
+penguins %>% 
+  tbl_summary(
+    by = species
+  )
+```
+
+Which creates several table columns for each `species` in the dataset.
+There are some `Unknown` values listed in the rows for the variables.
+That's because there is some missingness. We can remove that by using
+the `missing` argument:
+
+```{r}
+penguins %>% 
+  tbl_summary(
+    by = species,
+    missing = "no"
+  )
+```
+
+That's nicer! We can overwrite the statistic used with the `statistic`
+argument and giving that argument a `list()` (details are described in
+the package functionality documentation).
+
+```{r}
+penguins %>% 
+  tbl_summary(
+    by = species,
+    missing = "no",
+    statistic = list(all_continuous() ~ "{mean} {sd}")
+  )
+```
+
+In between the `{}` are the functions you want to use. So here, the
+functions are `mean()` and `sd()`. We can edit the labels used for the
+variables with `label` argument.
+
+```{r}
+penguins %>% 
+  tbl_summary(
+    by = species,
+    missing = "no",
+    statistic = list(all_continuous() ~ "{mean} {sd}"),
+    label = list(bill_length_mm = "Bill length (mm)")
+  )
+```
+
+It's often useful to know what the sample size is in each variable,
+which we can add as a column by piping into `add_n()`.
+
+```{r}
+penguins %>% 
+  tbl_summary(
+    by = species,
+    missing = "no",
+    statistic = list(all_continuous() ~ "{mean} {sd}"),
+    label = list(bill_length_mm = "Bill length (mm)")
+  ) %>% 
+  add_n()
+```
+
+Without using the `by` argument, we get the overall values for all the
+data. But with the `by` argument, that gets removed. We can add it back
+with the `add_overall()` function.
+
+```{r}
+penguins %>% 
+  tbl_summary(
+    by = species,
+    missing = "no",
+    statistic = list(all_continuous() ~ "{mean} {sd}"),
+    label = list(bill_length_mm = "Bill length (mm)")
+  ) %>% 
+  add_n() %>% 
+  add_overall()
+```
+
+We almost have a table ready for including in a paper or report!
