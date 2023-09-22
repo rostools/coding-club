@@ -4,6 +4,7 @@ description: "Several tips to save time and improve quality of life while workin
 author: "Stefania Noerman"
 date: "2023-04-03"
 date-modified: last-modified
+image: images/thumbnail.jpg
 categories: 
   - quarto
   - tips
@@ -168,4 +169,3 @@ Here are some other examples of :
 
 If you want to go back to normal, you can simply deactivate the
 **keybindings** in the Global Options to default mode.
-

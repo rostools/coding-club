@@ -4,6 +4,7 @@ description: "Tools and tips"
 author: "Núria Estanyol"
 date: "2023-06-21"
 date-modified: last-modified
+image: images/thumbnail.jpg
 categories: 
   - debugging
   - error messages
@@ -13,7 +14,7 @@ categories:
 
 > This session was recorded and uploaded on YouTube here:
 
-{{< video https://youtube.com/embed/eZtXI2hSZXI >}}
+{{< video https://www.youtube.com/embed/eZtXI2hSZXI >}}
 
 Debugging is a very broad topic, encompassing a wide array of scenarios
 that are often highly context-specific. We can encounter diverse

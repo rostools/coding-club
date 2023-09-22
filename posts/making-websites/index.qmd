@@ -4,6 +4,7 @@ description: "How to make a simple Quarto website"
 author: "Anders Askeland"
 date: "2023-02-28"
 date-modified: last-modified
+image: images/thumbnail.jpg
 categories: 
   - quarto
   - websites
