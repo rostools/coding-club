@@ -7,6 +7,7 @@ Authors@R:
 Encoding: UTF-8
 Imports: 
     dplyr,
+    furrr,
     gtsummary,
     magrittr,
     palmerpenguins
