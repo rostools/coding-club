@@ -6,6 +6,7 @@ author:
 - Luke W. Johnston
 date: "2023-06-02"
 date-modified: last-modified
+image: images/thumbnail.jpg
 categories: 
 - quarto
 - tables
@@ -14,7 +15,7 @@ categories:
 
 > This session was recorded and uploaded on YouTube here:
 
-{{< video https://youtube.com/embed/CN3O27cc4SY >}}
+{{< video https://www.youtube.com/embed/CN3O27cc4SY >}}
 
 In this session, we covered the `{gtsummary}` R packages that can be
 used to easily create tables to describe study datasets easily. To show

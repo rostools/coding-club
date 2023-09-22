@@ -55,4 +55,6 @@ the blog. To add a post, read through:
     tools. For all the programs we'll use, follow [these installation
     instructions](https://guides.rostools.org/pre-course.html#installation-instructions).
 
+<!-- Note: Images taken from https://www.pexels.com/ -->
+
 ## Blogs
