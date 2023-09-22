@@ -17,7 +17,10 @@ website:
       - text: "Code of Conduct"
         href: "https://guides.rostools.org/conduct.html"
 
-format: r3-theme-html
+format:
+  r3-theme-html:
+    include-before-body:
+      - "includes/site-counter.html"
 
 editor:
   markdown:
