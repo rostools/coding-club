@@ -1,0 +1,181 @@
+---
+title: "Parallel Processing"
+description: "Tips on how to do parallel processing using furrr package."
+author: 
+- "Yingxiao Yan"
+- "Luke W. Johnston"
+date: "2023-09-08"
+date-modified: last-modified
+image: images/thumbnail.jpg
+categories: 
+- quarto
+- parallel processing
+- furrr
+---
+
+> This session was recorded and uploaded on YouTube here:
+
+{{< video https://www.youtube.com/embed/94GAOZs5s20 >}}
+
+In this session, we covered how to do parallel processing using the
+`{furrr}` package. We also included the functions from the `{tidyverse}`
+package for convenience. We use the penguins dataset provided in
+the`{palmerpenguins}` package as example. So first, let's load up our
+packages!
+
+```{r setup}
+#| output: false
+library(tidyverse)
+library(furrr)
+library(palmerpenguins)
+```
+
+Let's first take a look at what are the variable names in the data:
+
+```{r}
+penguins %>%
+  names()
+```
+
+We then check how many penguins are in each specie in each sex.
+
+```{r}
+penguins %>%
+  count(species, sex)
+```
+
+Since we want to play around with parallel processing, possibly applying
+one function to different scenarios/settings/groups at the same time. We
+can build a function for linear regression with 2 variables,
+bill_length_mm, body_mass_g in the penguins dataset.
+
+```{r}
+tidy_lm <- function(data) {
+  results <- lm(bill_length_mm ~ body_mass_g,
+    data = data
+  )
+  broom::tidy(results) %>%
+    # This will make the result shown in tibble format
+    mutate(
+      sex = unique(data$sex),
+      # A new column sex is added in front of the result tibble
+      .before = everything()
+    )
+}
+```
+
+Then we use `plan(multisession)` to start a parallel processing.
+
+```{r}
+plan(multisession)
+```
+
+We then apply this function to different sex groups using the
+`future_map()` function, which is specifically designed for parallel
+processing. In this case, what is being paralleled is male and female
+penguins.
+
+```{r}
+penguins %>%
+  # Remove the penguins that have NA values in "sex".
+  drop_na(sex) %>%
+  # Split the data to 2 groups according to "sex" and put the data in a list
+  # object
+  group_split(sex) %>%
+  # Using the future_map() function to apply tidy_lm() to the 2 groups and
+  # return the result as a list.
+  future_map(tidy_lm) %>%
+  # The result in the list are rbinded as one tibble.
+  list_rbind()
+```
+
+To end the parallel processing, we use `plan(sequential)`.
+
+```{r}
+plan(sequential)
+```
+
+To do a sequential (non-parallel) processing, we use `map()` instead of
+`future_map()`.
+
+```{r}
+penguins %>%
+  drop_na(sex) %>%
+  group_split(sex) %>%
+  map(tidy_lm) %>%
+  list_rbind()
+```
+
+::: callout-warning
+**Note:** Creating a multisession itself will take time. For simple
+functions, this time may exceed the time needed for running all the code
+sequiential. So it is better you only use parallel processing for
+time-comsuming tasks
+:::
+
+Now let us try a more complex scenario with a new function using
+`reformulate()`, which is specifically designed for writing formulas
+
+```{r}
+# Take argument of Y variable and confounders
+tidy_lm_yvar <- function(yvar, confounders) {
+  # The X variables in the linear regression
+  model_formula <- reformulate(c("body_mass_g", confounders),
+    # The Y variable in the linear regression
+    response = yvar
+  )
+  results <- lm(model_formula,
+    data = penguins
+  )
+  broom::tidy(results) %>%
+    mutate(
+      yvar = yvar,
+      .before = everything()
+    )
+}
+```
+
+Try run the function with parallel processing, where 3 response
+variables (`bill_length_mm`, `bill_depth_mm`, `flipper_length_mm`) will
+be parallelized. Note that what is piped in the `future_map()`
+(separately/in parallel) will be used as the first argument of the
+function specified in it. If there is a second argument, in our case,
+confounder, we directly write it in the function.
+
+```{r}
+# Start parallel processing
+plan(multisession)
+
+c("bill_length_mm", "bill_depth_mm", "flipper_length_mm") %>%
+    # This is how it is written for the first argument if there is more than one
+    # argument
+  future_map(~ tidy_lm_yvar(.x,
+    confounders = "sex"
+  )) %>%
+  # The "names_to" argument in the list_rbind() function add a new variable
+  # called "model_ID", which establish the names of items in the original list
+  # object
+  list_rbind(names_to = "model_ID") %>%
+  # Change the value in the variable model_ID
+  mutate(model_ID = case_when(
+    model_ID == 1 ~ "bill1",
+    model_ID == 2 ~ "bill2",
+    model_ID == 3 ~ "bill3"
+  ))
+
+# Close parallel processing
+plan(sequential)
+```
+
+Another way to change the name of `"Model_ID"`.
+
+```{r}
+c("bill_length_mm", "bill_depth_mm", "flipper_length_mm") %>%
+  future_map(~ tidy_lm_yvar(.x,
+    confounders = "sex"
+  )) %>%
+  list_rbind(names_to = "model_ID") %>%
+  mutate(model_ID = str_replace(model_ID, "^", "bill"))
+```
+
+Done!
