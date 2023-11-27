@@ -15,7 +15,9 @@ categories:
 
 > This session was recorded and uploaded on YouTube here:
 
-In this session, we will learn how to use the recipes package to
+{{< video https://www.youtube.com/embed/7ULqg32j_j0?si=EVtd4GDRniY-Ns79 >}}
+
+In this session, we will learn how to use the `{recipes}` package to
 transform data for statistical modeling. `{recipes}` is a powerful tool
 for pre-processing data in a tidy and reproducible way. This package is
 an integral part of the the `{tidymodels}` workflow, which provides a
@@ -33,14 +35,14 @@ has its unique assumptions, so sometimes we need to fine-tune our data
 to meet those criteria. These transformations are tailored to the
 specific statistical test at hand. Pre-processing may include:
 
--   **Cleaning the data:** this can include removing missing values or
-    outliers
+-   **Cleaning the data:** This can include removing missing values or
+    outliers.
 
--   **Transforming the data:** this may involve converting variable to
+-   **Transforming the data:** This may involve converting variable to
     different scales, creating new variables, or combining existing
     variables. An example of this can be logarithmic transformation.
 
--   **Normalizing the data**: this involves scaling the variables to
+-   **Normalizing the data**: This involves scaling the variables to
     have a similar mean and variance.
 
 In today's session we'll focus on two fundamental pre-processing
@@ -84,7 +86,6 @@ Let's first take a quick look into the data!
 
 ```{r}
 # Load the penguins dataset
-penguins <- penguins
 penguins %>%
   glimpse()
 ```
@@ -93,8 +94,10 @@ Before we dive into data transformations, it is essential to have a
 clear research question in mind. Remember the data transformations
 depends on the research question.
 
-In this case, our research question is: *given knowledge of body mass,
-species, and sex, can we accurately estimate bill depth in penguins?*
+In this case, our research question is:
+
+> Given knowledge of body mass, species, and sex, can we accurately
+> estimate bill depth in penguins?
 
 ![Penguin bill depth](images/penguin.png){#fig-penguin-bill-depth
 align="center"}
@@ -104,8 +107,8 @@ model using the `lm()` function in R. Then, we will use the `tidy()`
 function to view the output of the model.
 
 The `tidy()` function constructs a tibble that summarizes the model's
-statistical findings. This includes estimates (a.ka. as coefficients)
-and p-values. For more information about the `tidy` function consult its
+statistical findings. This includes estimates (aka. as coefficients) and
+p-values. For more information about the `tidy` function consult its
 [documentation
 webpage](https://cran.r-project.org/web/packages/broom/vignettes/broom.html).
 
@@ -124,9 +127,10 @@ they are weak.
 
 An interpretation of the results can be as follows: If we keep all other
 variables constant (i.e species and sex), a one-unit increase in body
-mass is associated with very small increase (0.000706) in bill depth.
+mass is associated with a very small increase (0.000706 mm) in bill
+depth.
 
-##### Verifying the Assumptions of a Linear Regression Model
+### Verifying the assumptions of a linear regression model
 
 Linear regression models require certain assumptions to be met in order
 to be valid. These assumptions include:
@@ -144,28 +148,29 @@ to be valid. These assumptions include:
 We can use residual plots to check whether our model meets these
 assumptions.
 
-One of the easiest residual plots to interpret is the **q-q plot of the
-residuals**. In a q-q plot, the residuals of the model are plotted
+One of the easiest residual plots to interpret is the **Q-Q plot of the
+residuals**. In a Q-Q plot, the residuals of the model are plotted
 against the theoretical quantiles of the normal distribution. If the
-residuals are normally distributed, the points in the q-q plot will fall
+residuals are normally distributed, the points in the Q-Q plot will fall
 along a straight line.
 
 Let's check if our model meets those assumptions using the `plot()`
-function. The function `plot()` will generate a q-q plot of the
-residuals of the model.
+function. The function `plot()` will generate several plots to check
+your model assumptions. Here we only want the Q-Q plot of the residuals
+of the model, which we get by using the argument `which = 2`.
 
 ```{r}
-#Check linear model assumptions
-plot(test_model)
+# Check linear model assumptions
+plot(test_model, which = 2)
 ```
 
-The resulting q-q plot shows that the residuals of the model are not
+The resulting Q-Q plot shows that the residuals of the model are not
 normally distributed, as the points in the plot do not fall along a
 straight line (they are deviating in the upward part of the plot). This
 suggests that we may need to transform the data before fitting the
 linear regression model.
 
-If the q-q plot of the residuals deviates upwards, it means that there
+If the Q-Q plot of the residuals deviates upwards, it means that there
 are more outliers in the upper tail of the distribution than in the
 lower tail. This can be caused by a number of factors including a
 bimodal distribution of the dependent variable (i.e bill depth). If the
@@ -181,19 +186,18 @@ bill depth! We will use the `ggplot()` function for this.
 ```{r}
 ggplot(penguins, aes(x = bill_depth_mm)) +
   geom_histogram()
-
 ```
 
 The histogram shows that the distribution of bill depth appears to be
-bimodal. This suggests that the q-q plot is deviating upwards because of
+bimodal. This suggests that the Q-Q plot is deviating upwards because of
 the bimodal distribution of bill depth.
 
 To address this issue, we can transform the bill depth variable using a
 log transformation. After transforming the bill depth variable, we can
-generate a new q-q plot of the residuals. The new q-q plot shows that
+generate a new Q-Q plot of the residuals. The new Q-Q plot shows that
 the residuals should now be normally distributed.
 
-#### Creating a recipe for Data transformation
+### Creating a recipe for Data transformation
 
 Based on the previous, we will now create a recipe to transform our
 data. This will helps us to improve the normality of the residuals and
@@ -251,7 +255,7 @@ it is the only numeric predictor.
 
 Finally, we need to prepare and bake the data using the `prep()` and
 `bake()` functions. As mentioned before, this steps are really useful
-when creating recipe outside the `tidymodels` workflow and also when
+when creating recipe outside the `{tidymodels}` workflow and also when
 data splitting has been performed.
 
 Prepping the data will perform all the calculations for the data
@@ -263,11 +267,16 @@ In this example, we did not perform data splitting, so we will set
 
 ```{r}
 transformed_penguins <- penguins %>%
-  recipe(bill_depth_mm ~ body_mass_g + species + sex) %>% # Step 1: specify the model
-  step_log(all_double()) %>% # Step 2: specify data transformations
-  step_normalize(all_numeric_predictors()) %>%  # Step 2: specify data transformations
-  prep() %>% # Step 3: prepare data 
-  bake(new_data = NULL) # Step 3: bake the data 
+  # Step 1: specify the model
+  recipe(bill_depth_mm ~ body_mass_g + species + sex) %>% 
+  # Step 2: specify data transformations
+  step_log(all_double()) %>% 
+  # Step 2: specify data transformations
+  step_normalize(all_numeric_predictors()) %>%  
+  # Step 3: prepare data 
+  prep() %>% 
+  # Step 3: bake the data 
+  bake(new_data = NULL) 
 
 transformed_penguins
 ```
@@ -279,7 +288,7 @@ We can now re-run our linear model using the pre-processed data. To do
 this, we will simply replace the `data` argument to include the
 `transformed_penguins` data. e will call this the `transformed_model`
 and we will use `tidy()` to look at the output of the model. We will
-also use plot() to check linear assumptions.
+also use `plot()` to check linear assumptions.
 
 ```{r}
 # Fit linear model on transformed data
@@ -287,10 +296,10 @@ transformed_model <- lm(bill_depth_mm ~ body_mass_g + species + sex, data = tran
 # Look at the output of the model
 tidy(transformed_model)
 # Check linear assumptions
-plot(transformed_model)
+plot(transformed_model, which = 2)
 ```
 
-As we observe, the new q-q plot shows that the residuals are now
+As we observe, the new Q-Q plot shows that the residuals are now
 normally distributed (after log transformation).
 
 When we log transform the outcome variable in a linear regression model,
@@ -333,22 +342,16 @@ transformed_penguins <- penguins %>%
 **Keep in mind that the order in which you perform the pre-processing
 steps matters!!!**
 
-The recommended pre-processing outline is as follows:
+The recommended pre-processing ordering, taken from the `{recipes}`
+website, is as follows:
 
 1.  Impute
-
 2.  Handle factor levels
-
 3.  Individual transformations for skewness and other issues
-
 4.  Discretize (if needed and if you have no other choice)
-
 5.  Create dummy variables
-
 6.  Create interactions
-
 7.  Normalization steps (center, scale, range, etc)
-
 8.  Multivariate transformation (e.g. PCA, spatial sign, etc)
 
 For more information regarding the order in which the pre-processing
@@ -357,3 +360,4 @@ package [Ordering of
 Steps](https://recipes.tidymodels.org/articles/Ordering.html).
 
 Done!
+
