@@ -8,6 +8,7 @@ Encoding: UTF-8
 Imports: 
     broom,
     dplyr,
+    friends,
     furrr,
     gtsummary,
     magrittr,
