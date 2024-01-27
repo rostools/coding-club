@@ -1,0 +1,153 @@
+---
+title: "Using regular expressions to help process character data"
+description: "Wrangling and processing character data using 'regular expressions', which is a character pattern matching tool."
+author: 
+- "Yingxiao Yan"
+- "Luke W. Johnston"
+date: "2024-01-08"
+date-modified: last-modified
+image: images/thumbnail.jpg
+categories: 
+- character data
+- regular expressions
+---
+
+In this session, we covered how to use regular expression (also known as
+regex) to operate on character data (also called strings) using the
+`{tidyverse}` package. We use the `friends` dataset provided by
+the`{friends}` package as an example. So first, let's load up our
+packages!
+
+```{r setup}
+#| warning: false
+library(tidyverse)
+library(friends)
+friends
+```
+
+Friends has six columns, where the first column shows all the text said
+by the actors during the show.
+
+# Detecting patterns with `str_detect()`
+
+## Finding specific characters and repeats with `()` and `{}`
+
+If we want to find a specific set of characters that repeated multiple
+times, we can combine the regex `()` and `{}`.
+
+Let's first find all cases where the actor said "I-" multiple times to
+indicate stuttering from embarassment or confusion. We'll do this by
+keeping all rows with that string using `filter()` function from
+`{dplyr}` as well as using the `str_detect()` from the `{stringr}`
+package to use as a condition statement (if this pattern exists, it is
+`TRUE`, otherwise `FALSE`).
+
+```{r}
+friends %>%
+  filter(str_detect(text, "I-"))
+```
+
+Wrapping the `I-` in `()` doesn't change the result, but we do need to
+do it when checking for repeats. Using `()` tells regex to look
+specifically for the characters between the `()`.
+
+```{r}
+friends %>%
+  filter(str_detect(text, "(I-)"))
+```
+
+If we want to find cases where actors say "I-" multiple times, let's say
+2 times, we put the number of times inside the curly bracket. So `{2}`
+means find the pattern at least 2 or more times.
+
+```{r}
+friends %>%
+  filter(str_detect(text, "(I-){2}"))
+```
+
+If we want to find the string between 2 to 4 times, we use a `,` to
+separate the range:
+
+```{r}
+friends %>%
+  filter(str_detect(text, "(I-){2,4}"))
+```
+
+If we want to only find cases where an actor starts their line with
+"I-", we use the regex special character `^`, which tells regex to only
+look for the pattern when it starts at the beginning of the string.
+
+```{r}
+friends %>%
+  filter(str_detect(text, "^(I-){2,4}"))
+```
+
+The opposite, if we want to find a pattern that is at the end of a
+string, we use `$`.
+
+```{r}
+friends %>%
+  filter(str_detect(text, "(I-){2,4}$"))
+```
+
+## Looking for different characters with `|` and `[]`
+
+If we want to look for different characters ("this" OR "that") we use
+either `|` or `[]` depending on if the different characters is at one
+position in the string or multiple. For instance, if we want to find
+patterns that are either `I will` or `I'll` at the beginning of a
+string, we combine `()` with `|`. The `|` is a regex special character
+that means `OR`.
+
+```{r}
+friends %>%
+  filter(str_detect(text, "^(I will|I'll)"))
+```
+
+If instead we want to find cases where a character is different at a
+specific location in the string we use `[]`. For instance, looking for
+`Huh` or `huh` (notice the capitalization difference):
+
+```{r}
+friends %>%
+  filter(str_detect(text, "[hH]uh"))
+```
+
+If we wanted to look for times when actors use `huh` as a question or to
+seek feedback (like "that is pretty cool, huh?"), we could try to use
+`[hH]uh?`, but in regex, a `?` is a special character. When you use `?`,
+it tells regex the that character before the `?` may or may not be
+there. For instance, if we want to find all times when `kinda` and
+`kind` show up, we do:
+
+```{r}
+friends %>%
+  filter(str_detect(text, "[kK]inda?"))
+```
+
+But if we want to find the `?` in the string, we have to "escape" it
+with `\\` (in R you have to double escape the `\`, normally regex only
+needs `\` once). So to find cases where `huh?` is asked before another
+sentence or at the end of the string (using `( |$)`) we do:
+
+```{r}
+friends %>%
+  filter(str_detect(text, "[hH]uh\\?( |$)"))
+```
+
+# Replacing a pattern with another string using `str_replace_all()`
+
+A common use for using regex is to find and replace text with something
+else. There are two functions to do that: `str_replace()`, which will
+find the first case of the pattern and replace that, and
+`str_replace_all()`, which will find all cases of a pattern and replace
+them all. For instance, let's change all cases of `huh?` (a very common
+US word) with `eh?` (the same use as `huh?` but used in Canada).
+
+```{r}
+friends %>%
+  filter(str_detect(text, "[hH]uh\\?")) %>%
+  mutate(text = str_replace_all(text, "[hH]uh\\?", "eh?"))
+```
+
+Done!
