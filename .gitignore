@@ -1,6 +1,12 @@
-/.quarto/
 .Rproj.user
-_freeze
+.Rhistory
+.Rdata
+.httr-oauth
+.DS_Store
+_book
 _site
+public
+_freeze
+/.quarto/
 .Rbuildignore
-_dev
+slides/*.html
